@@ -1,0 +1,34 @@
+{
+  "name": "identiverse-privacy-demo",
+  "version": "1.0.0",
+  "description": "Demo app that showcases privacy & consent",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server/server.js",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vivshankar/identiverse-privacy-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vivshankar/identiverse-privacy-demo/issues"
+  },
+  "homepage": "https://github.com/vivshankar/identiverse-privacy-demo#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.2",
+    "i": "^0.3.6",
+    "ibm-verify-sdk": "^2.0.5",
+    "jsonwebtoken": "^8.5.1",
+    "uuidv4": "^6.2.8",
+    "verify-dpcm-sdk-js": "https://github.com/vivshankar/verify-dpcm-sdk-js.git#main"
+  }
+}

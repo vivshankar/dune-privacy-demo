@@ -1,0 +1,62 @@
+<div class="bx--row landing-page__breadcrumb">
+    <div class="bx--col-lg-12">
+        <nav aria-label="Page navigation">
+            <ol class="bx--breadcrumb">
+                <li class="bx--breadcrumb-item"><a href="/users" class="bx--link">Back to home</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="bx--row landing-page__banner">
+    <div class="bx--col">
+        <h2 class="landing-page__heading">Hello {{user.name}}!</h2>
+    </div>
+    <div class="bx--col"><a href="/logout" tabindex="0" class="button-logout bx--btn bx--btn--secondary">Logout</a>
+    </div>
+</div>
+<div class="bx--row profile-content">
+    <div class="ci--table-container bx--col">
+        <div data-tabs class="bx--tabs">
+            <div class="bx--tabs-trigger" tabindex="0">
+                <a href="javascript:void(0)" class="bx--tabs-trigger-text" tabindex="-1"></a>
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16"
+                    height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path>
+                </svg>
+            </div>
+            <ul class="bx--tabs__nav bx--tabs__nav--hidden" role="tablist">
+                <li class="bx--tabs__nav-item bx--tabs__nav-item--selected " data-target=".profile-content-tab"
+                    role="tab" aria-selected="true">
+                    <a tabindex="0" id="tab-link-1-default" class="darktabs bx--tabs__nav-link"
+                        href="javascript:void(0)" role="tab" aria-controls="tab-panel-1-default">{{title}}</a>
+                </li>
+                <li class="bx--tabs__nav-item " data-target=".profile-content-tab2" role="tab">
+					<a tabindex="0" id="tab-link-2-default" class="darktabs bx--tabs__nav-link"
+						href="javascript:void(0)" role="tab" aria-controls="tab-panel-2-default">Raw Data</a>
+				</li>
+            </ul>
+        </div>
+        <div class="bx--tab-content">
+            <div id="tab-panel-1-default" class="profile-content-tab" role="tabpanel"
+                aria-labelledby="tab-link-1-default" aria-hidden="false">
+                <div>
+                    {{statusMessage}}
+                </div>
+            </div>
+            <div id="tab-panel-2-default" class="profile-content-tab2" role="tabpanel"
+				aria-labelledby="tab-link-2-default" aria-hidden="true" hidden>
+				<div>
+					<div style="padding-top:.125rem">
+						<div class="bx--data-table-header">
+							<h4 class="bx--data-table-header__title">Raw assessment</h4>
+							<p class="bx--data-table-header__description">This is the assessment</p>
+						</div>
+						<pre>
+							<code class="railscasts json">{{fullJson}}</code>
+						</pre>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
