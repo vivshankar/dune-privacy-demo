@@ -39,8 +39,14 @@
         <div class="bx--tab-content">
             <div id="tab-panel-1-default" class="profile-content-tab" role="tabpanel"
                 aria-labelledby="tab-link-1-default" aria-hidden="false">
-                <div>
-                    {{statusMessage}}
+                <div data-notification="" class="ci--notification bx--inline-notification   
+                    bx--inline-notification--info" role="alert">
+                    <div class="bx--inline-notification__details">
+                        <div class="bx--inline-notification__text-wrapper">
+                        <p class="bx--inline-notification__title">{{title}}</p>
+                        <p class="bx--inline-notification__subtitle">This is a dummy page. Click on "Raw Data" to see details of the assessment.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="tab-panel-2-default" class="profile-content-tab2" role="tabpanel"

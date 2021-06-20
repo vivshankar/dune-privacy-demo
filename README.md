@@ -1,4 +1,4 @@
-# Identiverse Privacy Demo
+# Dune Privacy Demo
 
 Use this application to configure your first OIDC application for client authentication. The application is built with Node.js and the [Verify SDK](https://www.npmjs.com/package/ibm-verify-sdk). All UI assets can be found under [views](/views) and [public](/public). All views are written using vanilla HTML and JS and templated using Handlebars.
 
