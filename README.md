@@ -1,12 +1,14 @@
 # Dune Privacy Demo
 
-Use this application to configure your first OIDC application for client authentication. The application is built with Node.js and the [Verify SDK](https://www.npmjs.com/package/ibm-verify-sdk). All UI assets can be found under [views](/views) and [public](/public). All views are written using vanilla HTML and JS and templated using Handlebars.
+Use this application to configure your an OIDC application that illustrates purpose-aware OAuth scopes and native purpose-aware consent. The application is built with Node.js, the [Verify OAuth SDK](https://www.npmjs.com/package/ibm-verify-sdk) and the [Verify Privacy SDK](https://github.com/vivshankar/verify-dpcm-sdk-js/). All UI assets can be found under [views](/views) and [public](/public). All views are written using vanilla HTML and JS and templated using Handlebars.
+
+This application uses IBM Security Verify as the identity provider to illustrate the capabilities.
 
 In this app, you can do the following -
 
-1. Authenticating the client using IBM Security Verify
-2. Logging out of the client, which revokes the tokens
-3. Viewing the authenticated user's profile by unpacking the id_token
+- Authenticating the client using IBM Security Verify with one or more purpose-aware scopes
+- Viewing the authenticated user's profile by unpacking the id_token
+- Simulating a shopping cart consent experience, where the user's email and address is requested as part of the checkout process for the purpose of shipping purchases.
 
 ## Pre-requisites
 
@@ -16,49 +18,64 @@ In this app, you can do the following -
 
 ## Setup
 
-The demo introduces the use of the Verify Developer Portal to create the application as a developer, rather than create the application as an administrator.
+### Admin: Create attributes
 
-### Admin: Create user with developer role
+1. Login to IBM Security Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin
 
-The developer portal is only accessible by a user who belongs to the Developer group.
+2. Go to `Configuration > Attributes`
 
-1. Login to IBM Security Verify Admin Console (https://your-tenant.verify.ibm.com/ui/admin) using your admin credentials.
-2. Go to `Users and Groups`
-3. If you already have a user account created, switch to the Groups tab
-4. Edit `Developer` group
-5. Add your user to the members
+3. Add a new custom attribute with the ID `home_address`. When saved, it should look like this.
+    ![](docs/img/homeAddressAttribute.png)
 
-### Admin: Create the developer portal application on IBM Security Verify
+### Admin/Privacy Officer: Add data privacy items
 
-1. Login to IBM Security Verify Admin Console (https://your-tenant.verify.ibm.com/ui/admin) using your admin credentials.
-2. Go to Applications and click Add
-3. Search for and select "IBM Security Verify Developer Portal"
-4. Configure the OIDC grants that should be allowed. For this demo app, ensure that authorization code is selected.
-5. Save
+1. Login to IBM Security Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin or privacy officer credentials
 
-### Developer: Access the developer portal
+2. Go to `Data privacy & consent > Purposes`
 
-1. Login as the developer. If this is the same as the admin, you may need to re-login for group membership updates to take effect.
-2. You should see the Developer Portal application on the launchpad.
-3. Launch the developer portal
+3. Add purpose with ID `marketing` and 3 user attributes - email, mobile_number and work_number. Set access type as `default`. When saved and published, it should look like this.
 
-### Developer: Add a new application
+    ![](docs/img/marketingPurpose.png)
 
-1. Click on Add on the developer portal
-2. Choose "Authorization Code" as the grant type. Fill in the other fields as desired.
-3. You should now see a code snippet. Note the `client_id` and `client_secret`.
-4. Open the cloned Github repository on your machine
-5. Copy the `dotenv` file and name it `.env`
-6. Enter `TENANT_URL` as your tenant hostname (your-tenant.verify.ibm.com)
-7. Enter `CLIENT_ID` and `CLIENT_SECRET` based on step 3
-8. Save the file
+4. Add purpose with ID `profilemgmt` and 5 user attributes - mobile_number, given_name, family_name, display_name, email. Create two new access types during the creation of the purpose with the ID `read` and `write`. When saved and published, it should look like this.
+    
+    ![](docs/img/profilemgmtPurpose.png)
 
-### Configure for self-registration
+5. Add purpose with ID `shipping` and 3 user attributes - Home Address, mobile_number, email. Set access type as `default`. When saved and published, it should look like this.
+    
+    ![](docs/img/shippingPurpose.png)
 
-1. Login to IBM Security Verify Admin Console
-2. In the navigation menu, click on "User Flows"
-3. Create a new registration flow and publish
-4. Set `USER_REGISTRATION_LINK` in the .env file to the static link to the flow
+### Admin: Create an application
+
+1. Login to IBM Security Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin credentials
+
+2. Go to `Applications`
+
+3. Click on `Add Application` and add a `Custom Application`
+
+4. Fill in the name of the application etc. in the General tab.
+
+5. Switch to the `Sign On` tab and choose `Open ID Connect` as the Sign-on method.
+
+6. Enter an application URL. If you are running this app locally, use `http://localhost:3000`
+
+7. Verify that `Authorization code` is selected the grant type
+
+8. Uncheck `Require proof key for code exchange (PKCE) verification`.
+
+9. Add the redirect URI as `http://localhost:3000/auth/callback` if you are running this locally. If you hosting this somewhere, replace the hostname and protocol as appropriate.
+
+10. Click Save.
+
+11. In the Entitlements tab, choose `Automatic access for all users and groups`. Click Save.
+
+12. In the Privacy tab, add the Marketing, Profile Management and Shipping purposes.
+
+### Setup the application
+
+1. Copy the dotenv file and name the new file `.env`.
+
+2. Change the `TENANT_URL`, `ClIENT_ID` and `CLIENT_SECRET`. The client ID and secret are obtained from the application that was created in the previous section.
 
 ### Run the application
 
@@ -75,3 +92,11 @@ The developer portal is only accessible by a user who belongs to the Developer g
     ```
 
 3. Open the browser and go to http://localhost:3000 and you should be able to use the application
+
+4. If everything is correctly setup, you should be redirected to authenticate with your tenant. On authentication, you should be presented with a consent page as below. This demonstrates the OAuth integration using the special format of the `scope` (see the `SCOPE` in the .env file).
+
+    ![](docs/img/oauthConsent.png)
+
+5. Click on `Cart` once you login and you should see a consent prompt for shipping purpose. This demonstrates the native integration with APIs.
+
+    ![](docs/img/shippingConsent.png)
