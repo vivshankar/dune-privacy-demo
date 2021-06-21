@@ -70,7 +70,7 @@ app.use(session({
     secret: 'supersecret',
     resave: false,
     saveUninitialized: true,
-    cookie: { path: '/', maxAge: 120 * 1000, secure: false }
+    cookie: { path: '/', maxAge: 30 * 60 * 1000, secure: false }
 }))
 
 // define routes
