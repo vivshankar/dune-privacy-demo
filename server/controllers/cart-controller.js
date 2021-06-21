@@ -39,8 +39,9 @@ class PrivacyController {
             }
         ]
 
+        console.log(`Assessment request:\n${JSON.stringify(items, null, 2)}`);
         let decision = await privacy.assess(items);
-        console.log(`Assessment response:\n${JSON.stringify(decision, null, 2)}`)
+        console.log(`Assessment response:\n${JSON.stringify(decision, null, 2)}`);
         if (decision.status == "consent") {
             // filter the list based on those that can be consented
             let items = [];
@@ -49,11 +50,11 @@ class PrivacyController {
                     const attrId = (assess.attributeId) ? assess.attributeId : iaresult.attributeId;
                     const assessLog = `${assess.purposeId},${attrId},${assess.accessTypeId},${JSON.stringify(iaresult)}`;
                     if (!iaresult.requiresConsent) {
-                        console.log(`DEBUG: Requires no consent: `, assessLog)
+                        console.log(`Requires no consent: `, assessLog)
                         continue;
                     }
         
-                    console.log(`DEBUG: Requires consent: ${assessLog}`)
+                    console.log(`Requires consent: ${assessLog}`)
                     items.push({
                         purposeId: assess.purposeId,
                         attributeId: attrId,
@@ -63,8 +64,9 @@ class PrivacyController {
             }
 
             // metadata used to render a user consent page
+            console.log(`Metadata request:\n${JSON.stringify(items, null, 2)}`);
             let r = await privacy.getConsentMetadata(items);
-            console.log(`Metadata response:\n${JSON.stringify(r, null, 2)}`)
+            console.log(`Metadata response:\n${JSON.stringify(r, null, 2)}`);
             for (let record of r.metadata.default) {
                 let message = await this._buildConsentMessage(record);
                 record.id = record.purposeId + record.attributeId + record.accessTypeId;
@@ -103,11 +105,11 @@ class PrivacyController {
 
         let privacy = new Privacy(config, auth, {})
 
-        console.log(`DEBUG: ${JSON.stringify(req.body)}`)
+        console.log(`Store consents:\n${JSON.stringify(req.body, null, 2)}`);
         // assuming the request.body is a JSON array of 
         // consent records that need to be stored
         let r = await privacy.storeConsents(req.body);
-        console.log(`DEBUG: StoreConsents response:\n${JSON.stringify(r, null, 2)}`);
+        console.log(`Store consents response:\n${JSON.stringify(r, null, 2)}`);
         res.redirect('/users/cart');
     }
 

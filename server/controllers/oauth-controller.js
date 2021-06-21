@@ -4,6 +4,7 @@ const OAuthContext = require('ibm-verify-sdk').OAuthContext;
 class OAuthController {
 
     constructor(scope) {
+        this._scope = scope;
         this._authClient = new OAuthContext({
             tenantUrl    : config.tenantUrl,
             clientId     : config.clientId,
@@ -16,6 +17,7 @@ class OAuthController {
     }
 
     authorize = (req, res, scope) => {
+        console.log(`Authorize: Sending a request with scope: ${this._scope}`);
         this._authClient.authenticate().then(url => {
             res.redirect(url);
         }).catch(error => {
