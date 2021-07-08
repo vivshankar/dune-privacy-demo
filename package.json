@@ -29,6 +29,6 @@
     "ibm-verify-sdk": "^2.0.5",
     "jsonwebtoken": "^8.5.1",
     "uuidv4": "^6.2.8",
-    "verify-dpcm-sdk-js": "https://github.com/vivshankar/verify-dpcm-sdk-js.git#main"
+    "verify-privacy-sdk-js": "https://github.com/vivshankar/verify-privacy-sdk-js.git#main"
   }
 }
