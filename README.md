@@ -65,11 +65,13 @@ In this app, you can do the following -
 
 9. Add the redirect URI as `http://localhost:3000/auth/callback` if you are running this locally. If you hosting this somewhere, replace the hostname and protocol as appropriate.
 
-10. Click Save.
+10. Uncheck "Restrict Custom Scopes"
 
-11. In the Entitlements tab, choose `Automatic access for all users and groups`. Click Save.
+11. Click Save.
 
-12. In the Privacy tab, add the Marketing, Profile Management and Shipping purposes.
+12. In the Entitlements tab, choose `Automatic access for all users and groups`. Click Save.
+
+13. In the Privacy tab, add the Marketing, Profile Management and Shipping purposes.
 
 ### Setup the application
 
