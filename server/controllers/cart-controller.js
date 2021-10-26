@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const OAuthController = require('./oauth-controller');
-const Privacy = require('verify-dpcm-sdk-js');
+const Privacy = require('verify-privacy-sdk-js');
 const config = require('./config').Config;
 
 class PrivacyController {
