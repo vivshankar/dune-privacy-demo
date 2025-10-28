@@ -2,25 +2,25 @@
 
 Use this application to configure your an OIDC application that illustrates purpose-aware OAuth scopes and native purpose-aware consent. The application is built with Node.js, the [Verify OAuth SDK](https://www.npmjs.com/package/ibm-verify-sdk) and the [Verify Privacy SDK](https://github.com/vivshankar/verify-dpcm-sdk-js/). All UI assets can be found under [views](/views) and [public](/public). All views are written using vanilla HTML and JS and templated using Handlebars.
 
-This application uses IBM Security Verify as the identity provider to illustrate the capabilities.
+This application uses IBM Verify as the identity provider to illustrate the capabilities.
 
 In this app, you can do the following -
 
-- Authenticating the client using IBM Security Verify with one or more purpose-aware scopes
+- Authenticating the client using IBM Verify with one or more purpose-aware scopes
 - Viewing the authenticated user's profile by unpacking the id_token
 - Simulating a shopping cart consent experience, where the user's email and address is requested as part of the checkout process for the purpose of shipping purchases.
 
 ## Pre-requisites
 
 1. Install Node and Git on your machine
-2. [Create a tenant on IBM Security Verify](https://docs.verify.ibm.com/verify/docs/signing-up-for-a-free-trial)
+2. [Create a tenant on IBM Verify](https://docs.verify.ibm.com/verify/docs/signing-up-for-a-free-trial)
 3. Clone this repo to your machine
 
 ## Setup
 
 ### Admin: Create attributes
 
-1. Login to IBM Security Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin
+1. Login to IBM Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin
 
 2. Go to `Configuration > Attributes`
 
@@ -29,7 +29,7 @@ In this app, you can do the following -
 
 ### Admin/Privacy Officer: Add data privacy items
 
-1. Login to IBM Security Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin or privacy officer credentials
+1. Login to IBM Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin or privacy officer credentials
 
 2. Go to `Data privacy & consent > Purposes`
 
@@ -47,15 +47,15 @@ In this app, you can do the following -
 
 ### Admin: Create an application
 
-1. Login to IBM Security Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin credentials
+1. Login to IBM Verify admin console (https://yourtenant.verify.ibm.com/ui/admin) using admin credentials
 
 2. Go to `Applications`
 
-3. Click on `Add Application` and add a `Custom Application`
+3. Click on `Add Application` and add a `OpenID Connect` application.
 
 4. Fill in the name of the application etc. in the General tab.
 
-5. Switch to the `Sign On` tab and choose `Open ID Connect` as the Sign-on method.
+5. Switch to the `Sign On` tab.
 
 6. Enter an application URL. If you are running this app locally, use `http://localhost:3000`
 
@@ -65,19 +65,28 @@ In this app, you can do the following -
 
 9. Add the redirect URI as `http://localhost:3000/auth/callback` if you are running this locally. If you hosting this somewhere, replace the hostname and protocol as appropriate.
 
-10. Uncheck "Restrict Custom Scopes"
+10. Under "Custom scopes and API Access" section, uncheck "Restrict Custom Scopes"
 
-11. Click Save.
+11. Under the same section, edit "API access". Leave "Restrict API Access" as enabled and choose the following user permissions:
+    - Check for data usage approval
+    - Create privacy consent records
+    - Manage your privacy consents
+    - Read your privacy consents
+    - Retrieve privacy purposes and associated user's consent
 
-12. In the Entitlements tab, choose `Automatic access for all users and groups`. Click Save.
+12. Click Save.
 
-13. In the Privacy tab, add the Marketing, Profile Management and Shipping purposes.
+13. In the Entitlements tab, choose `Automatic access for all users and groups`. Click Save.
+
+14. In the Privacy tab, add the Marketing, Profile Management and Shipping purposes.
 
 ### Setup the application
 
 1. Copy the dotenv file and name the new file `.env`.
 
 2. Change the `TENANT_URL`, `ClIENT_ID` and `CLIENT_SECRET`. The client ID and secret are obtained from the application that was created in the previous section.
+
+3. Set the `DISCOVERY_URL` to `https://yourtenant.verify.ibm.com/oauth2/.well-known/openid-configuration`.
 
 ### Run the application
 
